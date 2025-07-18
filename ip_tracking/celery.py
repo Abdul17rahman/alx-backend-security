@@ -1,5 +1,5 @@
 import os
-from celery import Celery
+from ip_tracking.celery import Celery
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project.settings')
 app = Celery('your_project')

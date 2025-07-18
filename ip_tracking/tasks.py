@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
 from django.utils.timezone import now
-from celery import shared_task
+from ip_tracking.celery import shared_task
 from .models import RequestLog, SuspiciousIP
 
 SENSITIVE_PATHS = ['/admin', '/login']
+
 
 @shared_task
 def detect_suspicious_ips():
@@ -23,7 +24,9 @@ def detect_suspicious_ips():
     # Flag IPs
     for ip, count in ip_counts.items():
         if count > 100:
-            SuspiciousIP.objects.get_or_create(ip_address=ip, reason='Too many requests in 1 hour')
+            SuspiciousIP.objects.get_or_create(
+                ip_address=ip, reason='Too many requests in 1 hour')
 
     for ip in ip_sensitive_hits:
-        SuspiciousIP.objects.get_or_create(ip_address=ip, reason='Accessed sensitive path')
+        SuspiciousIP.objects.get_or_create(
+            ip_address=ip, reason='Accessed sensitive path')

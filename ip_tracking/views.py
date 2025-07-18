@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from ratelimit.decorators import ratelimit
-from ratelimit.core import get_usage
+from django_ratelimit.decorators import ratelimit
+from django_ratelimit.core import get_usage
 
 
 @csrf_exempt
